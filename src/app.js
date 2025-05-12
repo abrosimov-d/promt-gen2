@@ -17,7 +17,7 @@ export class App {
 		this.header = new Header(APP_NAME);
 		this.footer =  new Footer();
 
-		this.toolbar = new Toolbar('BEAUTIFY|SHUFFLE|-|_SEED|+', this.callback.bind(this));
+		this.toolbar = new Toolbar('GENERATE|BEAUTIFY|SHUFFLE|-|_SEED|+', this.callback.bind(this));
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
 		this.promt2Textarea = new PromtTextarea('PROMT 2', this.callback.bind(this));
@@ -117,6 +117,10 @@ export class App {
 			
 			case 'toolbar':
 				switch (data) {
+					case 'GENERATE':
+						console.log(this.promtGen.generateBasicPrompt());
+						this.promt1Textarea.setText(this.promtGen.generateBasicPrompt());
+						break;
 					case 'SHUFFLE':	
 						this.promt3Textarea.setText(
 							this.promtGen.shuffle(

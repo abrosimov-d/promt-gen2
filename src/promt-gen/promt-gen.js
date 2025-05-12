@@ -1,7 +1,10 @@
+import { PromptGenerator } from './generator';
+
 export class PromtGen {
     constructor() {
         this.promt = '';
         this.seed = 0;
+        this.generator = new PromptGenerator();
     }
 
     beautify(text) {
@@ -83,5 +86,10 @@ export class PromtGen {
 
         return result;      
     }
+
+    generateBasicPrompt() {
+        return this.generator.generatePhotorealisticPrompt();
+    }
+
 }
 
