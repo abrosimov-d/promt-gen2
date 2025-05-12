@@ -4,7 +4,8 @@ export class PromtGen {
     constructor() {
         this.promt = '';
         this.seed = 0;
-        this.generator = new PromptGenerator();
+        this.generator = this.seededRandom(this.seed)
+        this.promptGenerator = new PromptGenerator();
     }
 
     beautify(text) {
@@ -88,7 +89,7 @@ export class PromtGen {
     }
 
     generateBasicPrompt() {
-        return this.generator.generatePhotorealisticPrompt();
+        return this.promptGenerator.generatePhotorealisticPrompt();
     }
 
 }
