@@ -1,4 +1,5 @@
 import { Utils } from "../components/utils";
+import { PromtGen } from "./promt-gen";
 
 export class PromtTextarea {
 	constructor(title, callback) {
@@ -49,7 +50,8 @@ export class PromtTextarea {
     }
 
     updateCounter() {
-        this.counter.innerHTML = ' (' + this.promtTextarea.value.length + ')';  
+        let promtGen = new PromtGen();
+        this.counter.innerHTML = ' (' + promtGen.calculatePromtLen(this.promtTextarea.value) + ')';  
     }
 }
 

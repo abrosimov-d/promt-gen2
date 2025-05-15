@@ -1,4 +1,6 @@
 import { PromptGenerator } from './generator';
+import { PromptGenerator2 } from './generator2';
+import { PromptGenerator3 } from './g3';
 
 export class PromtGen {
     constructor() {
@@ -92,5 +94,19 @@ export class PromtGen {
         return this.promptGenerator.generatePhotorealisticPrompt();
     }
 
+    calculatePromtLen(prompt) {
+        return this.finish(this.validateMinus(this.textToArray(prompt)).join(this.delim)).length;
+    }
+
+    generateFortnitePrompt() {
+        const generator = new PromptGenerator2();
+        //console.log();
+        return generator.generateRandomFortnitePrompt();
+    }
+
+    generateRandomBeachPrompt() {
+        const generator = new PromptGenerator3();
+        return generator.generateRandomBeachPrompt();
+    }
 }
 
