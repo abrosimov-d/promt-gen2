@@ -128,7 +128,7 @@ export class App {
 					case 'G2':
 							this.promt1Textarea.setText(this.promtGen.generateFortnitePrompt());
 						break;
-						case 'SHUFFLE':	
+					case 'SHUFFLE':	
 						this.promt3Textarea.setText(
 							this.promtGen.shuffle(
 								this.config.seed, 
@@ -159,6 +159,7 @@ export class App {
 						this.promt1Textarea.setText(this.promtGen.beautify(this.config.promt1));
 						break;
 					case '+':
+						console.log(this.callbackLastMethod)
 						this.config.seed = Utils.strToInt(this.toolbar.getElementText('_SEED'));
 						this.config.seed = this.config.seed + 1;
 						this.toolbar.setElementText('_SEED', this.config.seed);
