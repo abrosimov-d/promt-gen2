@@ -1,6 +1,8 @@
 import { PromptGenerator } from './generator';
 import { PromptGenerator2 } from './generator2';
 import { PromptGenerator3 } from './g3';
+import {G5} from './G5';
+import {G4} from './G4';
 
 export class PromtGen {
     constructor() {
@@ -8,11 +10,18 @@ export class PromtGen {
         this.seed = 0;
         this.generator = this.seededRandom(this.seed)
         this.promptGenerator = new PromptGenerator();
+        this.beautifyCounter = 0;
     }
 
     beautify(text) {
         let result = []
-        let lines = text.split(/[.,|]/).map(part => part.trim()).filter(Boolean);
+        this.beautifyCounter++;
+        let lines = [];
+        if (this.beautifyCounter % 2 == 0) {
+            lines = text.split(/[.]/).map(part => part.trim()).filter(Boolean);
+        } else {
+            lines = text.split(/[.,|]/).map(part => part.trim()).filter(Boolean);
+        }
         lines.forEach((line => {
             result.push(line.trim())
         }))
@@ -90,6 +99,22 @@ export class PromtGen {
         return result;      
     }
 
+    insert(seed, promt1, promt2) {
+        this.seed = seed;
+        this.generator = this.seededRandom(this.seed);
+        let result = '';
+        let resultArray = [];
+
+        resultArray = this.validateMinus(this.textToArray(promt1));
+        this.validateMinus(this.textToArray(promt2)).forEach((elem) => {
+            //console.log(elem)
+            resultArray.splice(Math.floor(this.generator() * resultArray.length), 0, elem);
+        })
+        
+        result = this.finish(resultArray.join(this.delim))
+        return result; 
+    }
+
     generateBasicPrompt() {
         return this.promptGenerator.generatePhotorealisticPrompt();
     }
@@ -107,6 +132,17 @@ export class PromtGen {
     generateRandomBeachPrompt() {
         const generator = new PromptGenerator3();
         return generator.generateRandomBeachPrompt();
+    }
+
+    generateG5Prompt() {
+        const generator = new G5();
+        this.beautifyCounter = 1;
+        return generator.generateSinglePrompt();
+    }
+
+    generateG4Prompt() {
+        const generator = new G4();
+        return generator.generatePrompt();
     }
 }
 

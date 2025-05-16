@@ -17,7 +17,8 @@ export class App {
 		this.header = new Header(APP_NAME);
 		this.footer =  new Footer();
 
-		this.toolbar = new Toolbar('GEN1|GEN2|G3|BEAUTIFY|SHUFFLE|-|_SEED|+', this.callback.bind(this));
+		this.toolbar = new Toolbar('G1|G2|G3|G4|G5', this.callback.bind(this));
+		this.toolbar2 = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
 		this.promt2Textarea = new PromtTextarea('PROMT 2', this.callback.bind(this));
@@ -26,6 +27,7 @@ export class App {
 		this.importExport = new ImportExport('IMPORT/EXPORT', this.callback.bind(this))
 		
 		this.components.push(this.toolbar)
+		this.components.push(this.toolbar2)
 		this.components.push(this.promt1Textarea)
 		this.components.push(this.promt2Textarea)
 		this.components.push(this.promt3Textarea)
@@ -36,6 +38,8 @@ export class App {
 		this.config = JSON.parse(this.storage.get('promt-gen2-config', ''));
 
 		this.promtGen = new PromtGen();
+
+		this.callbackLastMethod = 'INSERT';
 	}
 
 	render() {
@@ -85,6 +89,7 @@ export class App {
 	callback(message, data) {
 		
 		let result = null;
+		let lastMethod = ''
 
 		switch (message) {
 
@@ -117,10 +122,10 @@ export class App {
 			
 			case 'toolbar':
 				switch (data) {
-					case 'GEN1':
+					case 'G1':
 						this.promt1Textarea.setText(this.promtGen.generateBasicPrompt());
 						break;
-					case 'GEN2':
+					case 'G2':
 							this.promt1Textarea.setText(this.promtGen.generateFortnitePrompt());
 						break;
 						case 'SHUFFLE':	
@@ -131,9 +136,21 @@ export class App {
 								this.config.promt2, 
 							));
 						Utils.copyTextToClipboard(this.promt3Textarea.getText());
+						this.callbackLastMethod = 'SHUFFLE';
 						break;
-						case 'G3':
+					case 'INSERT':
+						this.promt3Textarea.setText(this.promtGen.insert(this.config.seed, this.config.promt1, this.config.promt2));
+						Utils.copyTextToClipboard(this.promt3Textarea.getText());
+						this.callbackLastMethod = 'INSERT';
+						break;
+					case 'G3':
 							this.promt1Textarea.setText(this.promtGen.generateRandomBeachPrompt());
+							break;
+					case 'G4':
+							this.promt1Textarea.setText(this.promtGen.generateG4Prompt());
+							break;
+					case 'G5':
+							this.promt1Textarea.setText(this.promtGen.generateG5Prompt());
 							break;
 					case 'SEED':
 						//this.promtGen.seed(this.config.promt1);
@@ -145,13 +162,13 @@ export class App {
 						this.config.seed = Utils.strToInt(this.toolbar.getElementText('_SEED'));
 						this.config.seed = this.config.seed + 1;
 						this.toolbar.setElementText('_SEED', this.config.seed);
-						this.callback('toolbar', 'SHUFFLE');
+						this.callback('toolbar', this.callbackLastMethod);
 						break;
 					case '-':
 						this.config.seed = Utils.strToInt(this.toolbar.getElementText('_SEED'));
 						this.config.seed = this.config.seed - 1;
 						this.toolbar.setElementText('_SEED', this.config.seed);
-						this.callback('toolbar', 'SHUFFLE');
+						this.callback('toolbar', this.callbackLastMethod);
 						break;
 					case 'EXPORT':
 						Utils.copyTextToClipboard(this.importExport.getText());

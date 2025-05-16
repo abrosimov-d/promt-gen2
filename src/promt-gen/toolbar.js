@@ -1,8 +1,11 @@
+import { Utils } from "../components/utils";
+
 export class Toolbar {
     constructor(template, callback) {
         this.toolbar = null;
         this.template = template;
         this.callback = callback;
+        this.className = Utils.randomClassName(10);
     }
 
     render() {
@@ -14,11 +17,11 @@ export class Toolbar {
                 inner += `<button class="toolbar-button">${part}</button>`
             }
         })
-        return `<div class="toolbar">${inner}</div>`;
+        return `<div class="toolbar ${this.className}">${inner}</div>`;
     }
 
     run() {
-        this.toolbar = document.querySelector('.toolbar');
+        this.toolbar = document.querySelector('.'+this.className);
         this.toolbar.addEventListener('click', (event) => {
             this.callback('toolbar', event.target.textContent);
         })
