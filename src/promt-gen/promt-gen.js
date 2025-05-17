@@ -4,6 +4,7 @@ import { PromptGenerator3 } from './g3';
 import {G5} from './G5';
 import {G4} from './G4';
 import {G6} from './g6';
+import {g7 } from './g7';
 
 export class PromtGen {
     constructor() {
@@ -147,6 +148,11 @@ export class PromtGen {
 
     generateG6Prompt() {
         const generator = new G6();
+        return generator.generatePrompt();
+    }
+
+    generateG7Prompt() {
+        const generator = new g7();
         return generator.generatePrompt();
     }
 }

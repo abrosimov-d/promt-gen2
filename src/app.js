@@ -155,6 +155,18 @@ export class App {
 					case 'G6':
 							this.promt1Textarea.setText(this.promtGen.generateG6Prompt());
 							break;
+					case 'G7':
+							this.promt1Textarea.setText(this.promtGen.generateG7Prompt());
+							break;
+					case 'G10':
+						fetch('https://functions.yandexcloud.net/d4ehnamr7jel7mff1u9t')
+						.then(response => response.data)
+						.then(data => {
+							this.promt1Textarea.setText(data);
+						})
+						.catch(error => {
+							console.log(error)
+						})
 					case 'SEED':
 						//this.promtGen.seed(this.config.promt1);
 						break;
