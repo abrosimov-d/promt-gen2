@@ -3,6 +3,7 @@ import { PromptGenerator2 } from './generator2';
 import { PromptGenerator3 } from './g3';
 import {G5} from './G5';
 import {G4} from './G4';
+import {G6} from './g6';
 
 export class PromtGen {
     constructor() {
@@ -107,7 +108,6 @@ export class PromtGen {
 
         resultArray = this.validateMinus(this.textToArray(promt1));
         this.validateMinus(this.textToArray(promt2)).forEach((elem) => {
-            //console.log(elem)
             resultArray.splice(Math.floor(this.generator() * resultArray.length), 0, elem);
         })
         
@@ -142,6 +142,11 @@ export class PromtGen {
 
     generateG4Prompt() {
         const generator = new G4();
+        return generator.generatePrompt();
+    }
+
+    generateG6Prompt() {
+        const generator = new G6();
         return generator.generatePrompt();
     }
 }

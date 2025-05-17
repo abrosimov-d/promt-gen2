@@ -17,7 +17,7 @@ export class App {
 		this.header = new Header(APP_NAME);
 		this.footer =  new Footer();
 
-		this.toolbar = new Toolbar('G1|G2|G3|G4|G5', this.callback.bind(this));
+		this.toolbar = new Toolbar('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10', this.callback.bind(this));
 		this.toolbar2 = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
@@ -152,6 +152,9 @@ export class App {
 					case 'G5':
 							this.promt1Textarea.setText(this.promtGen.generateG5Prompt());
 							break;
+					case 'G6':
+							this.promt1Textarea.setText(this.promtGen.generateG6Prompt());
+							break;
 					case 'SEED':
 						//this.promtGen.seed(this.config.promt1);
 						break;
@@ -159,7 +162,6 @@ export class App {
 						this.promt1Textarea.setText(this.promtGen.beautify(this.config.promt1));
 						break;
 					case '+':
-						console.log(this.callbackLastMethod)
 						this.config.seed = Utils.strToInt(this.toolbar.getElementText('_SEED'));
 						this.config.seed = this.config.seed + 1;
 						this.toolbar.setElementText('_SEED', this.config.seed);
