@@ -5,6 +5,10 @@ import {G5} from './G5';
 import {G4} from './G4';
 import {g6} from './g6';
 import {g7 } from './g7';
+import {g8} from './g8';
+import {g9} from './g9';    
+import {g10} from './g10';
+import {g11} from './g11';
 
 export class PromtGen {
     constructor() {
@@ -153,6 +157,26 @@ export class PromtGen {
 
     generateG7Prompt() {
         const generator = new g7();
+        return generator.generatePrompt();
+    }
+
+    generateG8Prompt() {
+        const generator = new g8();
+        return generator.generatePrompt();
+    }
+
+    generateG9Prompt() {
+        const generator = new g9();
+        return generator.generatePrompt();
+    }
+
+    generateG10Prompt() {
+        const generator = new g10();
+        return generator.generatePrompt('bold');
+    }
+
+    generateG11Prompt() {
+        const generator = new g11();
         return generator.generatePrompt();
     }
 }

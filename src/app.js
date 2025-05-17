@@ -17,7 +17,8 @@ export class App {
 		this.header = new Header(APP_NAME);
 		this.footer =  new Footer();
 
-		this.toolbar = new Toolbar('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10', this.callback.bind(this));
+		this.toolbar = new Toolbar('G1|G2|G3|G4|G5|G6|G7|G8|G9', this.callback.bind(this));
+		this.toolbar3 = new Toolbar('G10|G11|G12|G13|G14', this.callback.bind(this))
 		this.toolbar2 = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
@@ -27,7 +28,8 @@ export class App {
 		this.importExport = new ImportExport('IMPORT/EXPORT', this.callback.bind(this))
 		
 		this.components.push(this.toolbar)
-		this.components.push(this.toolbar2)
+		this.components.push(this.toolbar3)
+		this.components.push(this.toolbar2)			
 		this.components.push(this.promt1Textarea)
 		this.components.push(this.promt2Textarea)
 		this.components.push(this.promt3Textarea)
@@ -158,15 +160,18 @@ export class App {
 					case 'G7':
 							this.promt1Textarea.setText(this.promtGen.generateG7Prompt());
 							break;
+					case 'G8':
+							this.promt1Textarea.setText(this.promtGen.generateG8Prompt());
+							break;
+					case 'G9':
+							this.promt1Textarea.setText(this.promtGen.generateG9Prompt());
+							break;
 					case 'G10':
-						fetch('https://functions.yandexcloud.net/d4ehnamr7jel7mff1u9t')
-						.then(response => response.data)
-						.then(data => {
-							this.promt1Textarea.setText(data);
-						})
-						.catch(error => {
-							console.log(error)
-						})
+							this.promt1Textarea.setText(this.promtGen.generateG10Prompt());
+							break;
+					case 'G11':
+							this.promt1Textarea.setText(this.promtGen.generateG11Prompt());
+							break;
 					case 'SEED':
 						//this.promtGen.seed(this.config.promt1);
 						break;
