@@ -9,6 +9,8 @@ import {g8} from './g8';
 import {g9} from './g9';    
 import {g10} from './g10';
 import {g11} from './g11';
+import {g12} from './g12';
+import {g13} from './g13';
 
 export class PromtGen {
     constructor() {
@@ -23,11 +25,12 @@ export class PromtGen {
         let result = []
         this.beautifyCounter++;
         let lines = [];
-        if (this.beautifyCounter % 2 == 0) {
-            lines = text.split(/[.]/).map(part => part.trim()).filter(Boolean);
-        } else {
-            lines = text.split(/[.,|]/).map(part => part.trim()).filter(Boolean);
-        }
+        lines = text.split(/[,]/).map(part => part.trim()).filter(Boolean);
+        //if (this.beautifyCounter % 2 == 0) {
+        //    lines = text.split(/[.]/).map(part => part.trim()).filter(Boolean);
+        //} else {
+        //    lines = text.split(/[.,|]/).map(part => part.trim()).filter(Boolean);
+        //}
         lines.forEach((line => {
             result.push(line.trim())
         }))
@@ -178,6 +181,15 @@ export class PromtGen {
     generateG11Prompt() {
         const generator = new g11();
         return generator.generatePrompt();
+    }
+
+    generateG12Prompt() {
+        return g12.generatePrompt();
+    }
+
+    generateG13Prompt() {
+        const generator = new g13();
+        return generator.generateRandomPrompt();
     }
 }
 

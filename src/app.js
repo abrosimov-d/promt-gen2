@@ -172,6 +172,12 @@ export class App {
 					case 'G11':
 							this.promt1Textarea.setText(this.promtGen.generateG11Prompt());
 							break;
+					case 'G12':
+							this.promt1Textarea.setText(this.promtGen.generateG12Prompt());
+							break;
+					case 'G13':
+							this.promt1Textarea.setText(this.promtGen.generateG13Prompt());
+							break;
 					case 'SEED':
 						//this.promtGen.seed(this.config.promt1);
 						break;
