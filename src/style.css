@@ -66,3 +66,28 @@ textarea {
   margin-bottom: 20px;
   text-align: center;
 }
+
+.div-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.div-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+select {
+  margin-bottom: 0px;
+}
+
+.div_div {
+  padding-bottom: 20px;
+}
+

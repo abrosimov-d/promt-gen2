@@ -8,6 +8,9 @@ import { ImportExport } from "./components/import-export";
 import { PromtTextarea } from "./promt-gen/promt-textarea";
 import { PromtGen } from "./promt-gen/promt-gen";
 import { Toolbar } from "./promt-gen/toolbar";
+import { Button } from "./components/button";
+import { Dropdown } from "./components/dropdown";
+import { Div } from "./components/div";
 
 const APP_NAME = 'PROMT-GEN2';
 
@@ -17,19 +20,25 @@ export class App {
 		this.header = new Header(APP_NAME);
 		this.footer =  new Footer();
 
-		this.toolbar = new Toolbar('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10', this.callback.bind(this));
-		this.toolbar3 = new Toolbar('G11|G12|G13|G14|G15|G16|G17|G18|G19|G20', this.callback.bind(this))
-		this.toolbar2 = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
+		this.div = new Div();
+
+		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20', this.callback.bind(this));
+		this.button = new Button('GENERATE', this.callback.bind(this));
+
+
+		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
 		this.promt2Textarea = new PromtTextarea('PROMT 2', this.callback.bind(this));
 		this.promt3Textarea = new PromtTextarea('RESULT', this.callback.bind(this));
 		this.configEditor = new ConfigEditor('CONFIG', this.callback.bind(this))
 		this.importExport = new ImportExport('IMPORT/EXPORT', this.callback.bind(this))
-		
+
+		this.div.push(this.dropdown)
+		this.div.push(this.button)
+
+		this.components.push(this.div)
 		this.components.push(this.toolbar)
-		this.components.push(this.toolbar3)
-		this.components.push(this.toolbar2)			
 		this.components.push(this.promt1Textarea)
 		this.components.push(this.promt2Textarea)
 		this.components.push(this.promt3Textarea)
@@ -92,7 +101,6 @@ export class App {
 		
 		let result = null;
 		let lastMethod = ''
-
 		switch (message) {
 
 			case 'promt-changed':
@@ -121,7 +129,12 @@ export class App {
 			case 'export':
 				return Utils.encodeUnicodeToBase64(JSON.stringify(this.config));
 				break;
-			
+
+			case 'button':
+				console.log('button', data);
+				this.callback('toolbar', this.dropdown.getSelectedValue());
+				break;
+
 			case 'toolbar':
 				switch (data) {
 					case 'G1':
