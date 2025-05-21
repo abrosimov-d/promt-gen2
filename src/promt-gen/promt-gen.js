@@ -11,6 +11,7 @@ import {g10} from './g10';
 import {g11} from './g11';
 import {g12} from './g12';
 import {g13} from './g13';
+import {g14} from './g14';
 
 export class PromtGen {
     constructor() {
@@ -189,6 +190,11 @@ export class PromtGen {
 
     generateG13Prompt() {
         const generator = new g13();
+        return generator.generateRandomPrompt('ru');
+    }
+
+    generateG14Prompt() {
+        const generator = new g14();
         return generator.generateRandomPrompt();
     }
 }

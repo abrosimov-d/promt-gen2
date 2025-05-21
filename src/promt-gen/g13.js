@@ -1,9 +1,15 @@
 export class g13 {
     constructor() {
-      // First, define static lists required for generator logic
       this.pantoneColors = [
         "Peach Fuzz", "Viva Magenta", "Very Peri", "Illuminating Yellow", "Classic Blue",
         "Living Coral", "Ultra Violet", "Greenery", "Rose Quartz", "Serenity"
+      ];
+  
+      this.colorPalettes = [
+        ["Viva Magenta", "Rose Quartz"],
+        ["Peach Fuzz", "Serenity"],
+        ["Very Peri", "Classic Blue"],
+        ["Greenery", "Illuminating Yellow"]
       ];
   
       this.clothings = [
@@ -32,29 +38,28 @@ export class g13 {
         "cut-out high-leg leotard"
       ];
   
-      // Feature generators for different attributes
       this.featureGenerators = {
         ethnicity: () => this.randomChoice(this.ethnicities),
-        hair: () => `${this.randomChoice(this.hairColors)} hair`,
-        makeup: () => this.randomChoice(this.makeups),
+        appearance: () => `${this.randomChoice(this.hairColors)} hair with ${this.randomChoice(this.makeups)}`,
         bust: () => `${this.randomChoice(this.bustSizes)} ${this.randomChoice(this.bustShapes)} bust`,
         outfit: () => `wearing a ${this.randomClothingWithColor()}`,
         location: () => this.generateLocation(),
         time: () => `during ${this.randomChoice(this.timesOfDay)}`,
         mood: () => this.randomChoice(this.moods),
+        pose: () => this.randomChoice(this.poses),
+        emotion: () => this.randomChoice(this.emotions),
         lens: () => `shot with a ${this.randomChoice(this.lenses)}`,
         lighting: () => this.randomChoice(this.lightings),
-        depth: () => this.randomChoice(this.depths)
+        depth: () => this.randomChoice(this.depths),
+        shoot: () => `in a ${this.randomChoice(this.shoots)}`
       };
   
-      // Static lists
       this.ethnicities = ["European"];
       this.hairColors = ["blonde", "brunette", "black", "red", "silver", "ombre"];
       this.makeups = ["minimal makeup", "natural makeup", "bold makeup", "no makeup"];
       this.bustSizes = ["small", "medium", "large", "extra-large"];
       this.bustShapes = ["perky", "round", "natural", "voluminous", "slender"];
   
-      // Define a graph of location variations for diversity
       this.locationGraph = {
         studio: ["bright studio", "dark studio", "industrial studio"],
         street: ["sunlit urban street", "rainy urban street", "night-time urban street"],
@@ -65,24 +70,31 @@ export class g13 {
   
       this.timesOfDay = ["golden hour", "dawn", "midday", "twilight", "blue hour", "sunset"];
       this.moods = ["dreamy atmosphere", "romantic vibe", "fashion editorial style", "nostalgic feel", "dramatic mood", "lighthearted tone"];
+      this.emotions = ["playful smile", "serene gaze", "confident expression", "shy glance", "focused look"];
+      this.poses = ["standing confidently", "walking slowly", "sitting on a chair", "kneeling", "lying on a couch"];
       this.lenses = ["85mm lens", "50mm lens", "35mm wide-angle lens", "macro lens", "portrait lens"];
       this.lightings = ["Rembrandt lighting", "softbox lighting", "natural diffuse light", "backlighting", "high-contrast lighting"];
       this.depths = ["shallow depth of field", "deep depth of field"];
+      this.shoots = ["editorial fashion shoot", "artistic fine-art photo", "fitness catalog shoot", "minimalist portrait series"];
+  
+      this.history = [];
     }
   
-    // Helper: pick random from array
     randomChoice(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
   
-    // Combine clothing item with a random Pantone color
+    randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+  
     randomClothingWithColor() {
       const clothing = this.randomChoice(this.clothings);
-      const color = this.randomChoice(this.pantoneColors);
+      const palette = this.randomChoice(this.colorPalettes);
+      const color = this.randomChoice(palette);
       return `${color} ${clothing}`;
     }
   
-    // Shuffle array in-place
     shuffleArray(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -91,7 +103,6 @@ export class g13 {
       return arr;
     }
   
-    // Generate a more diverse location by sampling nodes in the locationGraph
     generateLocation() {
       const categories = Object.keys(this.locationGraph);
       const start = this.randomChoice(categories);
@@ -104,16 +115,20 @@ export class g13 {
       return `in ${location}`;
     }
   
-    // Generate a random prompt with nonlinear order of features
     generateRandomPrompt() {
-      const base = `Full-body shot of a`;
-      const features = this.shuffleArray(Object.keys(this.featureGenerators));
-      const parts = features.map(key => this.featureGenerators[key]());
-      let prompt = `${base} ${parts.join(', ')}, ultra-realistic, 8K`;
+      let prompt;
+      let attempts = 0;
   
-      if (prompt.length > 500) {
-        prompt = prompt.slice(0, 500).replace(/\s+\S*$/, "");
-      }
+      do {
+        const featureKeys = this.shuffleArray(Object.keys(this.featureGenerators)).slice(0, this.randomInt(6, 10));
+        const parts = featureKeys.map(key => this.featureGenerators[key]());
+        prompt = `Full-body shot of a ${parts.join(', ')}, ultra-realistic, 8K`;
+        if (prompt.length > 500) prompt = prompt.slice(0, 500).replace(/\s+\S*$/, "");
+        attempts++;
+      } while (this.history.includes(prompt) && attempts < 10);
+  
+      this.history.push(prompt);
+      if (this.history.length > 20) this.history.shift();
       return prompt;
     }
   }

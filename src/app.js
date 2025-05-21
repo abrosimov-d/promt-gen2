@@ -17,8 +17,8 @@ export class App {
 		this.header = new Header(APP_NAME);
 		this.footer =  new Footer();
 
-		this.toolbar = new Toolbar('G1|G2|G3|G4|G5|G6|G7|G8|G9', this.callback.bind(this));
-		this.toolbar3 = new Toolbar('G10|G11|G12|G13|G14', this.callback.bind(this))
+		this.toolbar = new Toolbar('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10', this.callback.bind(this));
+		this.toolbar3 = new Toolbar('G11|G12|G13|G14|G15|G16|G17|G18|G19|G20', this.callback.bind(this))
 		this.toolbar2 = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
@@ -177,6 +177,27 @@ export class App {
 							break;
 					case 'G13':
 							this.promt1Textarea.setText(this.promtGen.generateG13Prompt());
+							break;
+					case 'G14':
+							this.promt1Textarea.setText(this.promtGen.generateG14Prompt());
+							break;
+					case 'G15':
+							this.promt1Textarea.setText(this.promtGen.generateG15Prompt());
+							break;
+					case 'G16':
+							this.promt1Textarea.setText(this.promtGen.generateG16Prompt());
+							break;
+					case 'G17':
+							this.promt1Textarea.setText(this.promtGen.generateG17Prompt());
+							break;
+					case 'G18':
+							this.promt1Textarea.setText(this.promtGen.generateG18Prompt());
+							break;
+					case 'G19':
+							this.promt1Textarea.setText(this.promtGen.generateG19Prompt());
+							break;
+					case 'G20':
+							this.promt1Textarea.setText(this.promtGen.generateG20Prompt());
 							break;
 					case 'SEED':
 						//this.promtGen.seed(this.config.promt1);
