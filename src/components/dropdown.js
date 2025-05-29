@@ -27,5 +27,9 @@ export class Dropdown{
     getSelectedValue(){
         return this.element.value;
     }
+
+    setSelectedValue(value){
+        this.element.value = value;
+    }
     
 }

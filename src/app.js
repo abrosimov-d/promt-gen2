@@ -22,9 +22,8 @@ export class App {
 
 		this.div = new Div();
 
-		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20', this.callback.bind(this));
+		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30', this.callback.bind(this));
 		this.button = new Button('GENERATE', this.callback.bind(this));
-
 
 		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
 
@@ -66,7 +65,6 @@ export class App {
 	}
 
 	run() {
-		//this.updateConfig(this.config);
 		this.components.forEach(component => {
 			component.run();
 		})
@@ -81,7 +79,8 @@ export class App {
 
 		this.config.promt1 = this.promt1Textarea.getText();
 		this.config.promt2 = this.promt2Textarea.getText();
-		this.config.promt3 = this.promt3Textarea.getText();	
+		this.config.promt3 = this.promt3Textarea.getText();
+		this.config.generator = this.dropdown.getSelectedValue();	
 		this.config.seed = this.toolbar.getElementText('_SEED');
 		this.configEditor.setText(JSON.stringify(this.config));
 		this.importExport.setText(Utils.encodeUnicodeToBase64(JSON.stringify(this.config)));
@@ -93,28 +92,27 @@ export class App {
 		this.promt1Textarea.setText(this.config.promt1);
 		this.promt2Textarea.setText(this.config.promt2);
 		this.promt3Textarea.setText(this.config.promt3);
+		this.dropdown.setSelectedValue(this.config.generator);
 		this.toolbar.setElementText('_SEED', this.config.seed);
 		this.updateConfig(this.config);
 	}
 
 	callback(message, data) {
-		
 		let result = null;
-		let lastMethod = ''
+		
 		switch (message) {
-
 			case 'promt-changed':
 				this.config = {};
 				this.config['promt1'] = this.promt1Textarea.getText();
-				this.config['promt2']  = this.promt2Textarea.getText();
-				this.config['promt3']  = this.promt3Textarea.getText();	
+				this.config['promt2'] = this.promt2Textarea.getText();
+				this.config['promt3'] = this.promt3Textarea.getText();    
 				this.updateConfig(this.config);
 				break;
 
-			case 'config-change':		
+			case 'config-change':        
 				if (data != null){
 					this.updateConfig(data);
-				}				
+				}                
 				break;
 
 			case 'config-load':
@@ -131,7 +129,6 @@ export class App {
 				break;
 
 			case 'button':
-				console.log('button', data);
 				this.callback('toolbar', this.dropdown.getSelectedValue());
 				break;
 
@@ -141,9 +138,9 @@ export class App {
 						this.promt1Textarea.setText(this.promtGen.generateBasicPrompt());
 						break;
 					case 'G2':
-							this.promt1Textarea.setText(this.promtGen.generateFortnitePrompt());
+						this.promt1Textarea.setText(this.promtGen.generateFortnitePrompt());
 						break;
-					case 'SHUFFLE':	
+					case 'SHUFFLE':    
 						this.promt3Textarea.setText(
 							this.promtGen.shuffle(
 								this.config.seed, 
@@ -159,61 +156,90 @@ export class App {
 						this.callbackLastMethod = 'INSERT';
 						break;
 					case 'G3':
-							this.promt1Textarea.setText(this.promtGen.generateRandomBeachPrompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateRandomBeachPrompt());
+						break;
 					case 'G4':
-							this.promt1Textarea.setText(this.promtGen.generateG4Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG4Prompt());
+						break;
 					case 'G5':
-							this.promt1Textarea.setText(this.promtGen.generateG5Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG5Prompt());
+						break;
 					case 'G6':
-							this.promt1Textarea.setText(this.promtGen.generateG6Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG6Prompt());
+						break;
 					case 'G7':
-							this.promt1Textarea.setText(this.promtGen.generateG7Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG7Prompt());
+						break;
 					case 'G8':
-							this.promt1Textarea.setText(this.promtGen.generateG8Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG8Prompt());
+						break;
 					case 'G9':
-							this.promt1Textarea.setText(this.promtGen.generateG9Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG9Prompt());
+						break;
 					case 'G10':
-							this.promt1Textarea.setText(this.promtGen.generateG10Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG10Prompt());
+						break;
 					case 'G11':
-							this.promt1Textarea.setText(this.promtGen.generateG11Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG11Prompt());
+						break;
 					case 'G12':
-							this.promt1Textarea.setText(this.promtGen.generateG12Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG12Prompt());
+						break;
 					case 'G13':
-							this.promt1Textarea.setText(this.promtGen.generateG13Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG13Prompt());
+						break;
 					case 'G14':
-							this.promt1Textarea.setText(this.promtGen.generateG14Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG14Prompt());
+						break;
 					case 'G15':
-							this.promt1Textarea.setText(this.promtGen.generateG15Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG15Prompt());
+						break;
 					case 'G16':
-							this.promt1Textarea.setText(this.promtGen.generateG16Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG16Prompt());
+						break;
 					case 'G17':
-							this.promt1Textarea.setText(this.promtGen.generateG17Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG17Prompt());
+						break;
 					case 'G18':
-							this.promt1Textarea.setText(this.promtGen.generateG18Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG18Prompt());
+						break;
 					case 'G19':
-							this.promt1Textarea.setText(this.promtGen.generateG19Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG19Prompt());
+						break;
 					case 'G20':
-							this.promt1Textarea.setText(this.promtGen.generateG20Prompt());
-							break;
+						this.promt1Textarea.setText(this.promtGen.generateG20Prompt());
+						break;
+					case 'G21':
+						this.promt1Textarea.setText(this.promtGen.generateG21Prompt());
+						break;
+					case 'G22':
+						this.promt1Textarea.setText(this.promtGen.generateG22Prompt());
+						break;
+					case 'G23':
+						this.promt1Textarea.setText(this.promtGen.generateG23Prompt());
+						break;
+					case 'G24':
+						this.promt1Textarea.setText(this.promtGen.generateG24Prompt());
+						break;
+					case 'G25':
+						this.promt1Textarea.setText(this.promtGen.generateG25Prompt());
+						break;
+					case 'G26':
+						this.promt1Textarea.setText(this.promtGen.generateG26Prompt());
+						break;
+					case 'G27':
+						this.promt1Textarea.setText(this.promtGen.generateG27Prompt());
+						break;
+					case 'G28':
+						this.promt1Textarea.setText(this.promtGen.generateG28Prompt());
+						break;
+					case 'G29':
+						this.promt1Textarea.setText(this.promtGen.generateG29Prompt());
+						break;
+					case 'G30':
+						this.promt1Textarea.setText(this.promtGen.generateG30Prompt());
+						break;
 					case 'SEED':
-						//this.promtGen.seed(this.config.promt1);
 						break;
 					case 'BEAUTIFY':
 						this.promt1Textarea.setText(this.promtGen.beautify(this.config.promt1));

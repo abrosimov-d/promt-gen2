@@ -12,6 +12,13 @@ import {g11} from './g11';
 import {g12} from './g12';
 import {g13} from './g13';
 import {g14} from './g14';
+import {g15} from './g15';
+import {g16} from './g16';
+import {g17} from './g17';
+import {g18} from './g18.js';
+import {g19} from './g19.js';
+import {g20} from './g20.js';
+import { g21 } from './g21';
 
 export class PromtGen {
     constructor() {
@@ -20,6 +27,10 @@ export class PromtGen {
         this.generator = this.seededRandom(this.seed)
         this.promptGenerator = new PromptGenerator();
         this.beautifyCounter = 0;
+        this.g18 = new g18();
+        this.g19 = new g19();
+        this.g20 = new g20();
+        this.g21 = new g21();
     }
 
     beautify(text) {
@@ -83,12 +94,47 @@ export class PromtGen {
         return result
     }  
 
+    insertCharInString(string, char, index) {
+        let result = string;
+        result = result.slice(0, index) + char + result.slice(index);
+        return result;
+    }
+
     finish(string) {
         let result = string
         for (let i = 0; i < 20; i++)
             result = result.replace(this.delim + this.delim, this.delim)
+        result = this.processBadWords(result);
         return result;
     }     
+
+    processBadWords(string) {
+        let result = string;
+        let badWords = [
+            'nude ',
+            'transparent ',
+            'sheer ',
+            'translucent ',
+            'see-through ',
+            'tank ',
+            'latex ',
+            'bra ', 'bra,',
+            'panties', 'panties,',
+            'thong',
+            'naturistki',
+            'underwear',
+            'nightgown',
+            'natural',
+            'lipstick'
+        ]
+
+        badWords.forEach((word) => {
+            result = result.replace(word, this.insertCharInString(word, '+', 2));
+        })
+
+        return result;
+    }
+
 
     shuffle(seed, promt1, promt2) {
         this.seed = seed;
@@ -196,6 +242,37 @@ export class PromtGen {
     generateG14Prompt() {
         const generator = new g14();
         return generator.generateRandomPrompt();
+    }
+
+    generateG15Prompt() {
+        const generator = new g15();
+        return generator.generatePrompt();
+    }
+
+    generateG16Prompt() {
+        const generator = new g16();
+        return generator.generatePrompt();
+    }
+
+    generateG17Prompt() {
+        const generator = new g17();
+        return generator.generatePrompt();
+    }
+
+    generateG18Prompt() {
+        return this.g18.generatePrompt();
+    }
+
+    generateG19Prompt() {
+        return this.g19.generatePrompt();
+    }
+
+    generateG20Prompt() {
+        return this.g20.generatePrompt();
+    }
+
+    generateG21Prompt() {
+        return this.g21.generatePrompt();
     }
 }
 

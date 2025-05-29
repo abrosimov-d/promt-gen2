@@ -5,7 +5,8 @@ import { Utils } from './components/utils'
 try {
     let app = new App()
     document.querySelector('body').innerHTML = app.render();
-app.run();
+    app.run();
 } catch (error) {
+    console.log(error)
     Utils.showError(error)
 }

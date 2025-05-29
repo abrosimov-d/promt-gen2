@@ -18,7 +18,6 @@ export class Button{
         }
 
         this.element.addEventListener('click', (e) => {
-            console.log('button', this.text); 
             this.callback('button', this.text);
         });
     }
