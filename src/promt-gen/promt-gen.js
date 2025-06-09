@@ -19,6 +19,11 @@ import {g18} from './g18.js';
 import {g19} from './g19.js';
 import {g20} from './g20.js';
 import { g21 } from './g21';
+import { G22 } from './g22';
+import { G23 } from './g23';
+import { G24 } from './g24';
+import { G25 } from './g25.js';
+import { G26 } from './g26.js';
 
 export class PromtGen {
     constructor() {
@@ -31,6 +36,11 @@ export class PromtGen {
         this.g19 = new g19();
         this.g20 = new g20();
         this.g21 = new g21();
+        this.g22 = new G22({ endpoint: '', apiKey: '' });
+        this.g23 = new G23();
+        this.g24 = new G24(''); // Initialize with empty API key
+        this.g25 = new G25();
+        this.g26 = new G26();
     }
 
     beautify(text) {
@@ -87,13 +97,29 @@ export class PromtGen {
                 if (elem[0] == '+')
                     result.push(this.obfuscateString(elem))
                 else
-                    result.push(elem)
+                    if (!elem.includes(':'))
+                        result.push(elem)                
             }
                 
         })
         return result
     }  
 
+    processRepalce(array, target) {
+        let result = target
+        array.forEach((elem) => {
+            if (elem.includes(':')) {
+                let parts = elem.split(':')
+                target.forEach((targetElem) => {
+                    if (targetElem.includes(parts[0])) {
+                        let newTargetElem = targetElem.replace(parts[0], parts[1])
+                        target.splice(target.indexOf(targetElem), 1, newTargetElem)
+                    }
+                })
+            }
+        })
+        return result;
+    }
     insertCharInString(string, char, index) {
         let result = string;
         result = result.slice(0, index) + char + result.slice(index);
@@ -125,7 +151,10 @@ export class PromtGen {
             'underwear',
             'nightgown',
             'natural',
-            'lipstick'
+            'lipstick',
+            'topless',
+            "erect",
+            "nipple",
         ]
 
         badWords.forEach((word) => {
@@ -160,12 +189,13 @@ export class PromtGen {
         this.generator = this.seededRandom(this.seed);
         let result = '';
         let resultArray = [];
-
         resultArray = this.validateMinus(this.textToArray(promt1));
         this.validateMinus(this.textToArray(promt2)).forEach((elem) => {
             resultArray.splice(Math.floor(this.generator() * resultArray.length), 0, elem);
         })
         
+        resultArray = this.processRepalce(this.textToArray(promt2), resultArray)
+
         result = this.finish(resultArray.join(this.delim))
         return result; 
     }
@@ -273,6 +303,53 @@ export class PromtGen {
 
     generateG21Prompt() {
         return this.g21.generatePrompt();
+    }
+
+    generateG22Prompt() {
+        return this.g22.generateRandomPrompt();
+    }
+
+    generateG23Prompt() {
+        return this.g23.generatePrompt();
+    }
+
+    setOpenRouterApiKey(apiKey) {
+        if (!apiKey) {
+            console.error('OpenRouter API key cannot be empty');
+            return false;
+        }
+        this.g24.setApiKey(apiKey);
+        return true;
+    }
+
+    async generateG24Prompt(promptType = 'beach') {
+        try {
+            const result = await this.g24.generatePrompt(promptType);
+            console.log('Generated prompt:', result);
+            return result;
+        } catch (error) {
+            console.error('Error in generateG24Prompt:', error);
+            return `Error: ${error.message}`;
+        }
+    }
+
+    async generateG24MultiplePrompts(count = 5, promptType = 'romantic') {
+        try {
+            const results = await this.g24.generateMultiplePrompts(count, promptType);
+            console.log('Generated prompts:', results);
+            return results;
+        } catch (error) {
+            console.error('Error in generateG24MultiplePrompts:', error);
+            return [`Error: ${error.message}`];
+        }
+    }
+
+    generateG25Prompt() {
+        return this.g25.generatePrompt();
+    }
+
+    generateG26Prompt() {
+        return this.g26.generatePrompt();
     }
 }
 

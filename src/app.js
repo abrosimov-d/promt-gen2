@@ -48,7 +48,7 @@ export class App {
 		this.config = JSON.parse(this.storage.get('promt-gen2-config', ''));
 
 		this.promtGen = new PromtGen();
-
+		this.promtGen.setOpenRouterApiKey('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');
 		this.callbackLastMethod = 'INSERT';
 	}
 
@@ -97,7 +97,7 @@ export class App {
 		this.updateConfig(this.config);
 	}
 
-	callback(message, data) {
+	async callback(message, data) {
 		let result = null;
 		
 		switch (message) {
@@ -129,7 +129,7 @@ export class App {
 				break;
 
 			case 'button':
-				this.callback('toolbar', this.dropdown.getSelectedValue());
+				await this.callback('toolbar', this.dropdown.getSelectedValue());
 				break;
 
 			case 'toolbar':
@@ -219,7 +219,12 @@ export class App {
 						this.promt1Textarea.setText(this.promtGen.generateG23Prompt());
 						break;
 					case 'G24':
-						this.promt1Textarea.setText(this.promtGen.generateG24Prompt());
+						this.button.setEnabled(false);
+						console.log('disable');
+						let res = await this.promtGen.generateG24Prompt('beach');
+						this.promt1Textarea.setText(res);
+						this.button.setEnabled(true);
+						console.log('enable');
 						break;
 					case 'G25':
 						this.promt1Textarea.setText(this.promtGen.generateG25Prompt());
@@ -243,6 +248,8 @@ export class App {
 						break;
 					case 'BEAUTIFY':
 						this.promt1Textarea.setText(this.promtGen.beautify(this.config.promt1));
+						this.promt3Textarea.setText(this.promtGen.insert(this.config.seed, this.promt1Textarea.getText(), '-'));
+						Utils.copyTextToClipboard(this.promt3Textarea.getText());
 						break;
 					case '+':
 						this.config.seed = Utils.strToInt(this.toolbar.getElementText('_SEED'));

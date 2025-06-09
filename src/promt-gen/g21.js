@@ -20,7 +20,16 @@ export class g21 {
             "sophisticated red lingerie with premium quality",
             "transparent white fabric with delicate drape",
             "fashionable body art with artistic elements",
-            "designer outfit with high-end fashion details"
+            "designer outfit with high-end fashion details",
+            "elegant evening gown with crystal embellishments",
+            "luxury silk dress with designer accessories",
+            "high-fashion cocktail dress with premium details",
+            "sophisticated business attire with designer elements",
+            "elegant swimwear with luxury styling",
+            "designer casual wear with premium quality",
+            "high-end sportswear with fashion-forward design",
+            "luxury beachwear with sophisticated style",
+            "elegant party dress with designer touches"
         ];
         
         this.locations = [

@@ -22,5 +22,7 @@ export class Button{
         });
     }
     
-    
+    setEnabled(enabled) {
+        this.element.disabled = !enabled;
+    }
 }
