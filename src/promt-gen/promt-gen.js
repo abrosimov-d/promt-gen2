@@ -24,6 +24,8 @@ import { G23 } from './g23';
 import { G24 } from './g24';
 import { G25 } from './g25.js';
 import { G26 } from './g26.js';
+import { G27 } from './g27.js';
+import { G28 } from './g28.js';
 
 export class PromtGen {
     constructor() {
@@ -41,6 +43,8 @@ export class PromtGen {
         this.g24 = new G24(''); // Initialize with empty API key
         this.g25 = new G25();
         this.g26 = new G26();
+        this.g27 = new G27();
+        this.g28 = new G28();
     }
 
     beautify(text) {
@@ -112,7 +116,7 @@ export class PromtGen {
                 let parts = elem.split(':')
                 target.forEach((targetElem) => {
                     if (targetElem.includes(parts[0])) {
-                        let newTargetElem = targetElem.replace(parts[0], parts[1])
+                        let newTargetElem = targetElem.replace(new RegExp(parts[0], 'g'), parts[1])
                         target.splice(target.indexOf(targetElem), 1, newTargetElem)
                     }
                 })
@@ -152,7 +156,7 @@ export class PromtGen {
             'nightgown',
             'natural',
             'lipstick',
-            'topless',
+            //'topless',
             "erect",
             "nipple",
         ]
@@ -184,6 +188,7 @@ export class PromtGen {
         return result;      
     }
 
+   
     insert(seed, promt1, promt2) {
         this.seed = seed;
         this.generator = this.seededRandom(this.seed);
@@ -350,6 +355,14 @@ export class PromtGen {
 
     generateG26Prompt() {
         return this.g26.generatePrompt();
+    }
+
+    generateG27Prompt() {
+        return this.g27.generatePrompt();
+    }
+
+    generateG28Prompt() {
+        return this.g28.generatePrompt();
     }
 }
 

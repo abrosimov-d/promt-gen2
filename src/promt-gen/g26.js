@@ -25,7 +25,15 @@ export class G26 {
             'standing pose with iPhone camera',
             'full length mirror shot with iPhone',
             'catalog style pose',
-            'fashion model pose'
+            'fashion model pose',
+            'taking a sexy selfie with iPhone',
+            'mirror selfie showing outfit',
+            'full body mirror selfie',
+            'posing for selfie with iPhone',
+            'taking a selfie in mirror',
+            'mirror selfie showing lingerie',
+            'full length mirror selfie pose',
+            'selfie pose with iPhone camera'
         ];
 
         this.lighting = [
@@ -149,19 +157,27 @@ export class G26 {
         const location = this.getRandomElement(this.locations);
         const pose = this.getRandomElement(this.poses);
         const light = this.getRandomElement(this.lighting);
-        const lingerie = this.getRandomElement(this.lingerieTypes);
-        const stockings = this.getRandomElement(this.stockingsTypes);
-        const color = this.getRandomElement(this.colors);
+        const lingerie1 = this.getRandomElement(this.lingerieTypes);
+        const lingerie2 = this.getRandomElement(this.lingerieTypes);
+        const stockings1 = this.getRandomElement(this.stockingsTypes);
+        const stockings2 = this.getRandomElement(this.stockingsTypes);
+        const color1 = this.getRandomElement(this.colors);
+        const color2 = this.getRandomElement(this.colors);
 
-        // Check if the lingerie choice is topless or braless
-        const isToplessOrBraless = lingerie.includes('topless') || lingerie.includes('braless');
+        // Check if the lingerie choices are topless or braless
+        const isToplessOrBraless1 = lingerie1.includes('topless') || lingerie1.includes('braless');
+        const isToplessOrBraless2 = lingerie2.includes('topless') || lingerie2.includes('braless');
         
-        // Only include color if it's not topless/braless
-        const clothingDescription = isToplessOrBraless 
-            ? `${lingerie} with ${stockings}`
-            : `wearing ${color} ${lingerie} with ${stockings}`;
+        // Create clothing descriptions for both women
+        const clothingDescription1 = isToplessOrBraless1 
+            ? `${lingerie1} with ${stockings1}`
+            : `wearing ${color1} ${lingerie1} with ${stockings1}`;
+            
+        const clothingDescription2 = isToplessOrBraless2 
+            ? `${lingerie2} with ${stockings2}`
+            : `wearing ${color2} ${lingerie2} with ${stockings2}`;
 
-        return `A beautiful young woman in ${location}, ${pose}, ${clothingDescription}. ${light}. High quality, 8k, full body shot.`;
+        return `Two beautiful young women in ${location}, ${pose}, one ${clothingDescription1} and another ${clothingDescription2}. ${light}. High quality, 8k, full body shot.`;
     }
 
     getRandomElement(array) {
