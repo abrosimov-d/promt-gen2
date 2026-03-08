@@ -26,6 +26,7 @@ import { G25 } from './g25.js';
 import { G26 } from './g26.js';
 import { G27 } from './g27.js';
 import { G28 } from './g28.js';
+import { G29 } from './g29.js';
 
 export class PromtGen {
     constructor() {
@@ -45,6 +46,7 @@ export class PromtGen {
         this.g26 = new G26();
         this.g27 = new G27();
         this.g28 = new G28();
+        this.g29 = new G29();
     }
 
     beautify(text) {
@@ -363,6 +365,18 @@ export class PromtGen {
 
     generateG28Prompt() {
         return this.g28.generatePrompt();
+    }
+
+    generateG29Prompt(options = {}) {
+        const result = this.g29.generatePrompt(options);
+        console.log('Generated G29 prompt:', result);
+        return result;
+    }
+
+    generateG29MultiplePrompts(count = 5, options = {}) {
+        const results = this.g29.generateMultiplePrompts(count, options);
+        console.log('Generated G29 prompts:', results);
+        return results;
     }
 }
 
