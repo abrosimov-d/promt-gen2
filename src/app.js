@@ -22,7 +22,7 @@ export class App {
 
 		this.div = new Div();
 
-		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30', this.callback.bind(this));
+		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30|G31', this.callback.bind(this));
 		this.button = new Button('GENERATE', this.callback.bind(this));
 
 		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
@@ -243,6 +243,9 @@ export class App {
 						break;
 					case 'G30':
 						this.promt1Textarea.setText(this.promtGen.generateG30Prompt());
+						break;
+					case 'G31':
+						this.promt1Textarea.setText(this.promtGen.generateG31Prompt());
 						break;
 					case 'SEED':
 						break;
