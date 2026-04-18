@@ -29,6 +29,8 @@ import { G28 } from './g28.js';
 import { G29 } from './g29.js';
 import { G30 } from './g30.js';
 import { G31 } from './g31.js';
+import { G32 } from './g32.js';
+import { G33 } from './g33.js';
 
 export class PromtGen {
     constructor() {
@@ -51,6 +53,8 @@ export class PromtGen {
         this.g29 = new G29();
         this.g30 = new G30();
         this.g31 = new G31();
+        this.g32 = new G32();
+        this.g33 = new G33();
     }
 
     beautify(text) {
@@ -383,6 +387,14 @@ export class PromtGen {
 
     generateG31Prompt(options = {}) {
         return this.g31.generatePrompt(options);
+    }
+
+    generateG32Prompt(options = {}) {
+        return this.g32.generatePrompt(options);
+    }
+
+    generateG33Prompt(options = {}) {
+        return this.g33.generatePrompt(options);
     }
 
     generateG29MultiplePrompts(count = 5, options = {}) {
