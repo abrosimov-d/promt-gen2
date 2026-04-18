@@ -22,7 +22,7 @@ export class App {
 
 		this.div = new Div();
 
-		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30|G31|G32|G33', this.callback.bind(this));
+		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30|G31|G32|G33|G34|G35|G36', this.callback.bind(this));
 		this.button = new Button('GENERATE', this.callback.bind(this));
 
 		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
@@ -253,6 +253,15 @@ export class App {
 					case 'G33':
 						this.promt1Textarea.setText(this.promtGen.generateG33Prompt());
 						break;
+					case 'G34':
+					    this.promt1Textarea.setText(this.promtGen.generateG34Prompt());
+					    break;
+					case 'G35':
+					    this.promt1Textarea.setText(this.promtGen.generateG35Prompt());
+					    break;
+					case 'G36':
+					    this.promt1Textarea.setText(this.promtGen.generateG36Prompt());
+					    break;
 					case 'SEED':
 						break;
 					case 'BEAUTIFY':

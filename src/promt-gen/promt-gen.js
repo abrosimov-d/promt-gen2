@@ -31,6 +31,9 @@ import { G30 } from './g30.js';
 import { G31 } from './g31.js';
 import { G32 } from './g32.js';
 import { G33 } from './g33.js';
+import { G34 } from './g34.js';
+import { G35 } from './g35.js';
+import { G36 } from './g36.js';
 
 export class PromtGen {
     constructor() {
@@ -55,6 +58,9 @@ export class PromtGen {
         this.g31 = new G31();
         this.g32 = new G32();
         this.g33 = new G33();
+        this.g34 = new G34();
+        this.g35 = new G35();
+        this.g36 = new G36();
     }
 
     beautify(text) {
@@ -397,10 +403,23 @@ export class PromtGen {
         return this.g33.generatePrompt(options);
     }
 
+    generateG34Prompt(options = {}) {
+        return this.g34.generatePrompt(options);
+    }
+
+    generateG35Prompt(options = {}) {
+        return this.g35.generatePrompt(options);
+    }
+
+    generateG36Prompt(options = {}) {
+        return this.g36.generatePrompt(options);
+    }
+
     generateG29MultiplePrompts(count = 5, options = {}) {
         const results = this.g29.generateMultiplePrompts(count, options);
         console.log('Generated G29 prompts:', results);
         return results;
     }
 }
+
 
