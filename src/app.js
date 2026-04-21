@@ -11,6 +11,7 @@ import { Toolbar } from "./promt-gen/toolbar";
 import { Button } from "./components/button";
 import { Dropdown } from "./components/dropdown";
 import { Div } from "./components/div";
+import { TextFileDownloader } from "./TextFileDownloader";
 
 const APP_NAME = 'PROMT-GEN2';
 
@@ -25,7 +26,7 @@ export class App {
 		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30|G31|G32|G33|G34|G35|G36', this.callback.bind(this));
 		this.button = new Button('GENERATE', this.callback.bind(this));
 
-		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+', this.callback.bind(this))
+		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+|SAVE', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
 		this.promt2Textarea = new PromtTextarea('PROMT 2', this.callback.bind(this));
@@ -50,6 +51,7 @@ export class App {
 		this.promtGen = new PromtGen();
 		this.promtGen.setOpenRouterApiKey('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');
 		this.callbackLastMethod = 'INSERT';
+
 	}
 
 	render() {
@@ -154,6 +156,9 @@ export class App {
 						this.promt3Textarea.setText(this.promtGen.insert(this.config.seed, this.config.promt1, this.config.promt2));
 						Utils.copyTextToClipboard(this.promt3Textarea.getText());
 						this.callbackLastMethod = 'INSERT';
+						break;
+					case 'SAVE':
+						TextFileDownloader.download(this.promt1Textarea.getText(), Utils.getCurrentTime()+'.txt');
 						break;
 					case 'G3':
 						this.promt1Textarea.setText(this.promtGen.generateRandomBeachPrompt());
