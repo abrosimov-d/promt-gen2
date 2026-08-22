@@ -67,7 +67,7 @@ export class PromtGen {
         let result = []
         this.beautifyCounter++;
         let lines = [];
-        lines = text.split(/[,]/).map(part => part.trim()).filter(Boolean);
+        lines = text.split(/[.]/).map(part => part.trim()).filter(Boolean);
         //if (this.beautifyCounter % 2 == 0) {
         //    lines = text.split(/[.]/).map(part => part.trim()).filter(Boolean);
         //} else {
