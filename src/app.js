@@ -26,7 +26,7 @@ export class App {
 		this.dropdown = new Dropdown('G1|G2|G3|G4|G5|G6|G7|G8|G9|G10|G11|G12|G13|G14|G15|G16|G17|G18|G19|G20|G21|G22|G23|G24|G25|G26|G27|G28|G29|G30|G31|G32|G33|G34|G35|G36', this.callback.bind(this));
 		this.button = new Button('GENERATE', this.callback.bind(this));
 
-		this.toolbar = new Toolbar('BEAUTIFY|INSERT|SHUFFLE|-|_SEED|+|SAVE', this.callback.bind(this))
+		this.toolbar = new Toolbar('BEAUTIFY|INSERT|INSERT10|SHUFFLE|SHUFFLE10|-|_SEED|+|SAVE', this.callback.bind(this))
 
 		this.promt1Textarea = new PromtTextarea('PROMT 1', this.callback.bind(this));
 		this.promt2Textarea = new PromtTextarea('PROMT 2', this.callback.bind(this));
@@ -71,6 +71,7 @@ export class App {
 			component.run();
 		})
 		this.importConfig(this.config);
+		this.div.show(false);
 	}
 
 	updateConfig(config) {
@@ -151,6 +152,27 @@ export class App {
 							));
 						Utils.copyTextToClipboard(this.promt3Textarea.getText());
 						this.callbackLastMethod = 'SHUFFLE';
+						break;
+					case 'INSERT10':    
+						this.promt3Textarea.setText(
+							this.promtGen.insert10(
+								this.config.seed, 
+								this.config.promt1, 
+								this.config.promt2, 
+							));
+						Utils.copyTextToClipboard(this.promt3Textarea.getText());
+						this.callbackLastMethod = 'INSERT10';
+						break;
+					case 'SHUFFLE10':
+						this.promt3Textarea.setText(
+							this.promtGen.shuffle10(
+								this.config.seed,
+								this.config.promt1,
+								this.config.promt2
+							)
+						);
+						Utils.copyTextToClipboard(this.promt3Textarea.getText());
+						this.callbackLastMethod = 'SHUFFLE10';
 						break;
 					case 'INSERT':
 						this.promt3Textarea.setText(this.promtGen.insert(this.config.seed, this.config.promt1, this.config.promt2));

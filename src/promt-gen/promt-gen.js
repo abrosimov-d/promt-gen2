@@ -61,6 +61,8 @@ export class PromtGen {
         this.g34 = new G34();
         this.g35 = new G35();
         this.g36 = new G36();
+
+        this.delim = ' '
     }
 
     beautify(text) {
@@ -147,10 +149,14 @@ export class PromtGen {
     }
 
     finish(string) {
+
         let result = string
+        result = result.replaceAll(',', ' ')
         for (let i = 0; i < 20; i++)
-            result = result.replace(this.delim + this.delim, this.delim)
-        result = this.processBadWords(result);
+            result = result.replaceAll(this.delim + this.delim, this.delim)
+
+        //result = this.processBadWords(result);
+
         return result;
     }     
 
@@ -204,7 +210,28 @@ export class PromtGen {
         return result;      
     }
 
-   
+    shuffle10(seed, promt1, promt2) {
+        let result = ''
+
+        let count = 50;
+
+        let startPromt5 = promt1.substring(0, 5);
+
+        while (count > 0) {
+            let tmp = this.shuffle(seed, promt1, promt2);
+            let tmp5 = tmp.substring(0, 5);
+            console.log(startPromt5);
+            if (startPromt5 == tmp5) {
+                result = tmp + '\n---------------------------------------------\n' + result
+                count--;
+            }
+            seed++;
+        }
+
+        return result;
+    }
+
+
     insert(seed, promt1, promt2) {
         this.seed = seed;
         this.generator = this.seededRandom(this.seed);
@@ -219,6 +246,27 @@ export class PromtGen {
 
         result = this.finish(resultArray.join(this.delim))
         return result; 
+    }
+
+    insert10(seed, promt1, promt2) {
+
+        this.generator = this.seededRandom(seed);
+
+        let result = '';
+
+        let validPromt2 = this.validateMinus(this.textToArray(promt2))
+
+        for (let i=0; i<=validPromt2.length; i++) {
+            let subPromt = validPromt2.slice(i);
+            let tmp = this.insert(seed, promt1, subPromt.join(' '));
+            result = tmp + '\n---------------------------------------------\n' + result
+            // result = tmp + '\n---------------------------------------------\n' + result
+            // result = tmp + '\n---------------------------------------------\n' + result
+            // result = tmp + '\n---------------------------------------------\n' + result
+        }
+
+        //result = this.finish(resultArray.join(this.delim))
+        return result;
     }
 
     generateBasicPrompt() {

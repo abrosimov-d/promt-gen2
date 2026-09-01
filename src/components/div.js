@@ -21,9 +21,20 @@ export class Div{
     }
     
     run(){
+        if (this.element == null) {
+            this.element = document.querySelector(`.${this.className}`);
+        }
+        
         for (let component of this.components) {
             component.run();
         }
+
+    }
+
+    show(visible) {
+
+        console.log('div', this.element);
+        this.element.style.display = visible ? 'block' : 'none';
     }
     
 }
